@@ -15,11 +15,12 @@ class UMengAnalytics {
 
   static Future<bool> init(String key,
       {int policy,
+        String channel = "default",
       bool reportCrash,
       bool encrypt,
       double interval,
       bool logEnable}) {
-    Map<String, dynamic> args = {"key": key};
+    Map<String, dynamic> args = {"key": key, "channel": channel};
 
     if (policy != null) args["policy"] = policy;
     if (reportCrash != null) args["reportCrash"] = reportCrash;
@@ -37,11 +38,11 @@ class UMengAnalytics {
   }
 
   static Future<Null> beginPageView(String name) async {
-    _channel.invokeMethod("beginPageView", {"name": name});
+    return _channel.invokeMethod("beginPageView", {"name": name});
   }
 
   static Future<Null> endPageView(String name) async {
-    _channel.invokeMethod("endPageView", {"name": name});
+    return _channel.invokeMethod("endPageView", {"name": name});
   }
 
   // event

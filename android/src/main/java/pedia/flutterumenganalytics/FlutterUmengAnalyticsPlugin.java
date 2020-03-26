@@ -66,8 +66,6 @@ public class FlutterUmengAnalyticsPlugin implements MethodCallHandler {
 
       result.success(null);
     } else if (call.method.equals("reportError")) {
-
-      Log.e("UMENG", (String) call.argument("error"));
       MobclickAgent.reportError((Context) activity, (String) call.argument("error"));
       result.success(null);
     } else {
@@ -81,8 +79,10 @@ public class FlutterUmengAnalyticsPlugin implements MethodCallHandler {
 //            (Context) activity, (String) call.argument("key"), "default");
 //
 //    MobclickAgent.startWithConfigure(config);
-    UMConfigure.init((Context) activity, (String) call.argument("key"), "ZhaopaiDefault", UMConfigure.DEVICE_TYPE_PHONE, null);
-    UMConfigure.setLogEnabled(true);
+    UMConfigure.init((Context) activity, (String) call.argument("key"), (String) call.argument("channel"), UMConfigure.DEVICE_TYPE_PHONE, null);
+    if (call.argument("logEnable") != null) {
+      UMConfigure.setLogEnabled((Boolean) call.argument("logEnable"));
+    }
     getTestDeviceInfo((Context) activity);
     result.success(true);
   }
